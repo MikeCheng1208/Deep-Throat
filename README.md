@@ -6,7 +6,7 @@
 再以太鏈上進行開發，利用Remix 與 MetaMask 部署 Solidity 到鏈上，產出ABI，前端採用Vue.js來做為開發框架，再利用 MetaMask、Web3.js與合約互動跟溝通。
 
 
-Etherscan : https://etherscan.io/
+Ropsten Etherscan : https://ropsten.etherscan.io/
 
 MetaMask : https://metamask.io/
 
