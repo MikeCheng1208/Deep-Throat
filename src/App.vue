@@ -6,6 +6,7 @@ import PostInput from './components/PostInput';
 import LoadingBar from './components/LoadingBar';
 import ErreoPage from './components/ErreoPage';
 import MenuPage from './components/MenuPage';
+import LodingPage from './components/LodingPage';
 export default {
     components: {
         VueMetamask,
@@ -13,7 +14,8 @@ export default {
         PostInput,
         LoadingBar,
         ErreoPage,
-        MenuPage
+        MenuPage,
+        LodingPage,
     },
     data(){
         return {
@@ -29,6 +31,7 @@ export default {
             isOpenPop: false,
             type: "ROPSTEN",
             isOpenMenu: false,
+            isTextLoading: true
         };
     },
     methods:{
@@ -54,10 +57,10 @@ export default {
         },
         handOpenMenu(){
             this.isOpenMenu = !this.isOpenMenu;
+        },
+        LoadingCloseFn(){
+            this.isTextLoading = false
         }
-    },
-    mounted(){
-        
     }
 };
 </script>
@@ -94,6 +97,7 @@ export default {
             :web3="web3"
             :contractAddress="contractAddress"
             :handLoading="handLoading"
+            :LoadingCloseFn="LoadingCloseFn"
         ></message-item>
 
         <post-input
@@ -111,8 +115,10 @@ export default {
         </a>
 
         <div class="noROPSTEN" v-if="type !== 'ROPSTEN'">
-            <h1>Currently not in the ROPSTEN.</h1>
+            <h1>Currently not in the ROPSTEN or not logIn.</h1>
         </div>
+
+        <loding-page v-if="isTextLoading"></loding-page>
         
     </div>
 </template>

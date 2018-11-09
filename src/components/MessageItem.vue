@@ -1,7 +1,7 @@
 <script>
 import abiContract from 'abi';
 export default {
-    props: ["web3", "contractAddress", "handLoading"],
+    props: ["web3", "contractAddress", "handLoading", "LoadingCloseFn"],
     data(){
         return {
             postMessage: [],
@@ -10,6 +10,9 @@ export default {
     watch:{
         web3(){
 		    this.getTextData();
+        },
+        postMessage(){
+            this.LoadingCloseFn();
         }
     },
     computed:{
