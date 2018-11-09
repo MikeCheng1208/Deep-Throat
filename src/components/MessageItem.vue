@@ -10,9 +10,6 @@ export default {
     watch:{
         web3(){
 		    this.getTextData();
-        },
-        postMessage(){
-            this.LoadingCloseFn();
         }
     },
     computed:{
@@ -34,6 +31,15 @@ export default {
                 this.postMessage.push(result);
             });
 		},
+    },
+    mounted(){
+        let t = setInterval(() => {
+            if(this.postMessage.length !== 0){
+                this.LoadingCloseFn();
+                clearInterval(t);
+                console.log('loading over');
+            }
+        }, 100);
     }
 };
 </script>
