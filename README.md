@@ -1,5 +1,5 @@
 # Deep Throat
-![DeepThroat](./dist/assets/img.png)
+![DeepThroat](./assets/demo.gif)
 簡單的區塊鏈上的留言板，利用區塊鏈的特性不可刪除跟修改，將資料寫入區塊鏈，再利用前端將寫入鏈上的資料給抓取出來，顯示給使用者看。
 
 在ROPSTEN(測試鏈)上運行，不需要使用真錢，用測試鍊也可以達到與正式鏈同樣的效果！
