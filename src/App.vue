@@ -36,22 +36,26 @@ export default {
             postMessage: [],
         };
     },
+    watch:{
+        postMessage(data){
+            
+        }
+    },
     methods:{
         onComplete(data){
             this.web3 = data.web3;
             this.metaMaskAddress = data.metaMaskAddress;
             this.type = data.type;
             this.isTextLoading = true;
-            if(data.type === "NO_INSTALL_METAMASK"){
-                this.isOpenPop = true;
-                this.LoadingCloseFn();
-                return ;
+            switch (data.type) {
+                case 'NO_INSTALL_METAMASK':
+                        this.isOpenPop = true;
+                        this.LoadingCloseFn();
+                    return ;
+                case 'NO_LOGIN':
+                        this.LoadingCloseFn();
+                    return ;
             }
-            if(data.type === "NO_LOGIN"){
-                this.LoadingCloseFn();
-                return ;
-            }
-            this.getTextData();
         },
         handMsgBox(){
             this.isOpenMsg = !this.isOpenMsg;
@@ -72,7 +76,6 @@ export default {
             this.isTextLoading = false
         },
 		getTextData(){
-            console.log('GET');
             const contract = this.web3.eth.contract(abiContract).at(this.contractAddress);
             let NewMessageEvent = contract.allEvents({fromBlock: 4386608, toBlock: "latest"});
             NewMessageEvent.watch((error, result)=>{
@@ -112,7 +115,7 @@ export default {
         ></menu-page>
         
         <message-item 
-            v-if="type === 'ROPSTEN'"
+            v-show="type === 'ROPSTEN'"
             :web3="web3"
             :contractAddress="contractAddress"
             :handLoading="handLoading"
