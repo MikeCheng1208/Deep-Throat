@@ -1,16 +1,15 @@
 <script>
-import abiContract from 'abi';
 export default {
-    props: ["web3", "contractAddress", "handLoading", "LoadingCloseFn"],
+    props: ["web3", "contractAddress", "handLoading", "LoadingCloseFn", "getTextData", "postMessage"],
     data(){
         return {
-            postMessage: [],
+            isInitWeb3: false,
         };
     },
     watch:{
         web3(){
 		    this.getTextData();
-        }
+        },
     },
     computed:{
         postMessageSort(){
@@ -22,22 +21,13 @@ export default {
     methods:{
         toNumberFn(_id){
             return _id.toNumber();
-        },
-		getTextData(){
-            const contract = this.web3.eth.contract(abiContract).at(this.contractAddress);
-            let NewMessageEvent = contract.allEvents({fromBlock: 4386608, toBlock: "latest"});
-            NewMessageEvent.watch((error, result)=>{
-                if(error) return console.error('data is Error');
-                this.postMessage.push(result);
-            });
-		},
+        }
     },
     mounted(){
         let t = setInterval(() => {
             if(this.postMessage.length !== 0){
                 this.LoadingCloseFn();
                 clearInterval(t);
-                console.log('loading over');
             }
         }, 100);
     }

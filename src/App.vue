@@ -1,5 +1,6 @@
 <script>
 import abi from 'ethereumjs-abi';
+import abiContract from 'abi';
 import VueMetamask from 'vue-metamask';
 import MessageItem from './components/MessageItem';
 import PostInput from './components/PostInput';
@@ -31,7 +32,8 @@ export default {
             isOpenPop: false,
             type: "ROPSTEN",
             isOpenMenu: false,
-            isTextLoading: true
+            isTextLoading: true,
+            postMessage: [],
         };
     },
     methods:{
@@ -39,9 +41,17 @@ export default {
             this.web3 = data.web3;
             this.metaMaskAddress = data.metaMaskAddress;
             this.type = data.type;
+            this.isTextLoading = true;
             if(data.type === "NO_INSTALL_METAMASK"){
                 this.isOpenPop = true;
+                this.LoadingCloseFn();
+                return ;
             }
+            if(data.type === "NO_LOGIN"){
+                this.LoadingCloseFn();
+                return ;
+            }
+            this.getTextData();
         },
         handMsgBox(){
             this.isOpenMsg = !this.isOpenMsg;
@@ -60,7 +70,16 @@ export default {
         },
         LoadingCloseFn(){
             this.isTextLoading = false
-        }
+        },
+		getTextData(){
+            console.log('GET');
+            const contract = this.web3.eth.contract(abiContract).at(this.contractAddress);
+            let NewMessageEvent = contract.allEvents({fromBlock: 4386608, toBlock: "latest"});
+            NewMessageEvent.watch((error, result)=>{
+                if(error) return console.error('data is Error');
+                this.postMessage.push(result);
+            });
+		}
     }
 };
 </script>
@@ -98,6 +117,8 @@ export default {
             :contractAddress="contractAddress"
             :handLoading="handLoading"
             :LoadingCloseFn="LoadingCloseFn"
+            :getTextData="getTextData"
+            :postMessage="postMessage"
         ></message-item>
 
         <post-input
