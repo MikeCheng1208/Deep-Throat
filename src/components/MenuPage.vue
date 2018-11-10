@@ -13,7 +13,7 @@ export default {
                 <img src="~metamsk2.png" alt="">
                 How to use metamask
             </a>
-            <a href="" target="_blank"><i class="fab fa-github fa-2x"></i>GitHub</a>
+            <a href="https://github.com/MikeCheng1208/Deep-Throat" target="_blank"><i class="fab fa-github fa-2x"></i>GitHub</a>
         </div>
 
     </div>
