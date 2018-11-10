@@ -36,17 +36,15 @@ export default {
             postMessage: [],
         };
     },
-    watch:{
-        postMessage(data){
-            
-        }
-    },
     methods:{
         onComplete(data){
             this.web3 = data.web3;
             this.metaMaskAddress = data.metaMaskAddress;
             this.type = data.type;
             this.isTextLoading = true;
+            if(this.postMessage.length !== 0){
+                this.LoadingCloseFn();
+            }
             switch (data.type) {
                 case 'NO_INSTALL_METAMASK':
                         this.isOpenPop = true;
